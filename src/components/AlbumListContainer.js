@@ -1,23 +1,22 @@
 import * as React from 'react'
 import * as request from 'superagent'
 import AlbumsList from './AlbumsList'
-import { connect } from 'react-redux';
+import { connect } from 'react-redux'
+import {helloWorld} from '../actions/test'
 
 class AlbumsListContainer extends React.Component {
   state = {}
 
   componentDidMount() {
     request('https://jsonplaceholder.typicode.com/albums')
-      .then(response => this.setState({ albums: response.body }))
-      
-      this.props.dispatch({
-        type: 'HELLO_wORLD',
-        payload:{
-          firstName: 'Alice',
-          lastName: 'McDog'
-        }
-      })
+      .then(response => 
+        this.setState({ albums: response.body })
+        )
+      this.props.helloWorld()
+    
   }
+
+
 
   render() {
     if (!this.state.albums) return 'Loading...'
@@ -25,4 +24,6 @@ class AlbumsListContainer extends React.Component {
   }
 }
 
-export default connect()(AlbumsListContainer)
+
+
+export default connect(null, {helloWorld})(AlbumsListContainer)
